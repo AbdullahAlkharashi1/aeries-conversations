@@ -13,6 +13,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { Plus, MessageSquare, Settings } from "lucide-react";
 import { createNewSession, getSessions } from "@/lib/chat-storage";
 import { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ const AppSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sessions, setSessions] = useState(getSessions());
+  const { toast } = useToast();
 
   useEffect(() => {
     const onStorage = () => setSessions(getSessions());
@@ -28,12 +30,26 @@ const AppSidebar = () => {
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const handleNewChat = () => {
-    const id = createNewSession();
-    navigate(`/chat/${id}`);
+  // Keep sessions fresh on route changes (ensures titles/order update)
+  useEffect(() => {
     setSessions(getSessions());
-  };
+  }, [location.pathname]);
 
+  const handleNewChat = () => {
+    try {
+      const id = createNewSession();
+      // Refresh local list immediately so the new chat appears at the top
+      setSessions(getSessions());
+      navigate(`/chat/${id}`);
+    } catch (err) {
+      console.error("Failed to create new chat", err);
+      toast({
+        title: "Couldn’t start a new chat",
+        description: "Please try again. If this persists, clear local data in Settings.",
+        variant: "destructive",
+      });
+    }
+  };
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
