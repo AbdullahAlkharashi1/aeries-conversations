@@ -24,6 +24,7 @@ const ChatPage = () => {
       navigate("/", { replace: true });
       return;
     }
+    setIsTyping(false);
     setMessages(
       session.messages.map((m, idx) => ({
         id: `${idx}`,
