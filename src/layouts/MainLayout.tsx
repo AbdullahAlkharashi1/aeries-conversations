@@ -1,11 +1,18 @@
 
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, Navigate } from "react-router-dom";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/navigation/AppSidebar";
 import wingLogo from "@/assets/aeries-wing.png";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const MainLayout = () => {
+  {
+    /* Simple gate to require visiting login/register first */
+  }
+  const authed = typeof window !== "undefined" && localStorage.getItem("aeries_authed") === "1";
+  if (!authed) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">

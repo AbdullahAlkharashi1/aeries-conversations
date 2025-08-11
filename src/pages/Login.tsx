@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import wingLogo from "@/assets/aeries-wing.png";
 import ThemeToggle from "@/components/theme/ThemeToggle";
-
+import { createNewSession, getCurrentSessionId } from "@/lib/chat-storage";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -16,8 +16,14 @@ const Login = () => {
   }, []);
 
   const handleLogin = () => {
-    // For now, just navigate to main app
-    navigate("/");
+    localStorage.setItem("aeries_authed", "1");
+    const current = getCurrentSessionId();
+    if (current) {
+      navigate(`/chat/${current}`);
+    } else {
+      const id = createNewSession();
+      navigate(`/chat/${id}`);
+    }
   };
 
   return (
