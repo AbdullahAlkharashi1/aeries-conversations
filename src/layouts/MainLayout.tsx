@@ -1,3 +1,4 @@
+
 import { Link, Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/navigation/AppSidebar";
@@ -15,9 +16,8 @@ const MainLayout = () => {
               <SidebarTrigger className="ml-1" />
               <img src={wingLogo} alt="Aeries logo" width={24} height={24} loading="lazy" />
               <Link to="/" className="text-base font-semibold tracking-tight">Aeries</Link>
-              <div className="ml-auto flex items-center gap-1 text-sm">
+              <div className="ml-auto flex items-center gap-1">
                 <ThemeToggle />
-                <Link to="/login" className="hover:underline px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-ring">Log in</Link>
               </div>
             </div>
           </header>

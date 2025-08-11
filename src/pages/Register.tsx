@@ -8,14 +8,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import wingLogo from "@/assets/aeries-wing.png";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Aeries – Log in";
+    document.title = "Aeries – Sign up";
   }, []);
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     // For now, just navigate to main app
     navigate("/");
   };
@@ -30,25 +30,43 @@ const Login = () => {
         {/* Logo and title */}
         <div className="flex flex-col items-center space-y-2">
           <img src={wingLogo} alt="Aeries logo" width={48} height={48} />
-          <h1 className="text-2xl font-bold">Welcome to Aeries</h1>
-          <p className="text-muted-foreground text-center">Your falcon-wing AI chat assistant</p>
+          <h1 className="text-2xl font-bold">Join Aeries</h1>
+          <p className="text-muted-foreground text-center">Create your account to get started</p>
         </div>
 
-        {/* Login form */}
+        {/* Register form */}
         <Card>
           <CardHeader>
-            <CardTitle>Log in</CardTitle>
+            <CardTitle>Create account</CardTitle>
             <CardDescription>
-              Enter your credentials to access your account
+              Fill in your details to create a new account
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First name</Label>
+                <Input
+                  id="firstName"
+                  placeholder="John"
+                  autoComplete="given-name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last name</Label>
+                <Input
+                  id="lastName"
+                  placeholder="Doe"
+                  autoComplete="family-name"
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="john@example.com"
                 autoComplete="email"
               />
             </div>
@@ -57,25 +75,29 @@ const Login = () => {
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
-                autoComplete="current-password"
+                placeholder="Create a strong password"
+                autoComplete="new-password"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm your password"
+                autoComplete="new-password"
               />
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button onClick={handleLogin} className="w-full" variant="hero">
-              Log in
+            <Button onClick={handleRegister} className="w-full" variant="hero">
+              Create account
             </Button>
-            <div className="text-sm text-center space-y-2">
-              <Link to="#" className="text-primary hover:underline">
-                Forgot your password?
+            <div className="text-sm text-center">
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary hover:underline font-medium">
+                Log in
               </Link>
-              <div>
-                Don't have an account?{" "}
-                <Link to="/register" className="text-primary hover:underline font-medium">
-                  Sign up
-                </Link>
-              </div>
             </div>
           </CardFooter>
         </Card>
@@ -100,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
